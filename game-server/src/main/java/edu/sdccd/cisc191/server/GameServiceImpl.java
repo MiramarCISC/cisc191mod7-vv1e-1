@@ -51,8 +51,7 @@ public class GameServiceImpl extends GameServiceGrpc.GameServiceImplBase {
                 .setMatchId(matchId)
                 .setPlayerName(match.playerName())
                 .setOpponentName(match.opponentName())
-                .setMessage("Joined " + match.matchType() + " match " + matchId
-                        + " on " + difficulty + " difficulty. Click Play Match to let the server choose a winner.")
+                .setMessage(buildJoinSummary(matchId, playerName, match.opponentName(), difficulty, ranked))
                 .build();
 
         responseObserver.onNext(response);
@@ -80,7 +79,18 @@ public class GameServiceImpl extends GameServiceGrpc.GameServiceImplBase {
             String difficulty,
             boolean ranked
     ) {
-        return "TODO: build join summary";
+        if (matchId == null || matchId.isBlank()) {
+            return "No match";
+        }
+
+        return String.format(
+            "Match %s: %s vs %s (%s, %s)",
+            matchId,
+            (playerName == null || playerName.isBlank()) ? "Player" : playerName,
+            (opponentName == null || opponentName.isBlank()) ? "Bot" : opponentName,
+            (difficulty == null || difficulty.isBlank())? "Normal" : difficulty,
+            ranked ? "ranked" : "casual"
+        );
     }
 
     @Override
