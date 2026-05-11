@@ -7,21 +7,13 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class MatchStatistics {
 
-    // TODO 9: Replace these counters with a thread-safe design.
-    // Recommended: AtomicInteger joinedMatchCount and AtomicInteger completedMatchCount.
     private final AtomicInteger joinedMatchCount = new AtomicInteger(0);
     private final AtomicInteger completedMatchCount = new AtomicInteger(0);
 
-    /**
-     * TODO 9: Make this update thread-safe.
-     */
     public void recordJoin() {
         joinedMatchCount.incrementAndGet();
     }
 
-    /**
-     * TODO 9: Make this update thread-safe.
-     */
     public void recordCompletion() {
         completedMatchCount.incrementAndGet();
     }
@@ -34,12 +26,6 @@ public class MatchStatistics {
         return completedMatchCount.get();
     }
 
-    /**
-     * TODO 9: Return a readable, thread-safe statistics summary.
-     *
-     * Expected format:
-     * Server stats: 3 joined, 2 completed
-     */
     public String buildStatusLine() {
         return String.format("Server stats: %d joined, %d completed", getJoinedMatchCount(), getCompletedMatchCount());
     }

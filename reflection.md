@@ -1,5 +1,7 @@
 # Module 7 Lab Reflection 
 
+## Original README questions
+
 ### What is the purpose of FXML in this project?
 > The purpose of FXML is to decouple the view of the JavaFX client from the code making up the client application.
 
@@ -52,3 +54,23 @@
 
 ### Which unit test helped you the most, and why?
 > The `java.edu.cisc191.controller.GameControllerTest.buildJoinLogMessageTrimsAndDefaultsInput` unit test helped me the most, as it helped remind me to properly implement both the formatting and default values for `buildJoinLogMessage()`.
+
+## Additional Canvas Questions
+
+### What shared state exists in this lab?
+> The joined and completed match counts act as shared state, as they can be accessed in a simultaneous manner, thus being "shared."
+
+### Why is `count++` not thread-safe?
+> `count++` is not thread-safe, as it involves fetching `count`, adding 1 to the fetched value, and saving `count`.
+> In a case where 2 simultaneous calls to increment `count` are made, where `count` equals `x`, both calls will fetch `x` and save `x+1`, making count `x+1` instead of `x+2` as intended.
+
+### How does `AtomicInteger` help with thread safety?
+> `AtomicInteger` helps with thread safety by ensuring that the value of the stored integer changes only if it is incrementing from the same value it started with.
+> This avoids race conditions and ensures thread safety by ensuring the integer is only overwritten if its current state matches the one the incrementation began with, retrying if not.
+
+### Why might a gRPC server need thread-safe shared data structures?
+> A gRPC server needs thread-safe shared data structures in order to avoid an inconsistent state in cases where values are being simultaneously updated by different client calls.
+
+### Why should JavaFX controls be updated on the JavaFX Application Thread?
+> JavaFX controls should be updated on the Application Thread in order to avoid race conditions, which could leave the JavaFX UI in a dangerous state.
+> `Platform.runLater()` ensures that all calls to modify JavaFX controls are run in a single thread, thus avoiding inconsistent control state.
