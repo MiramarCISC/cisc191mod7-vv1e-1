@@ -198,8 +198,8 @@ public class GameController {
         return String.format(
             "Joining %s match as %s on %s difficulty...",
             ranked? "ranked": "casual",
-            (playerName == null || playerName.isBlank())? "Player": playerName,
-            (difficulty == null || difficulty.isBlank())? "Normal": difficulty
+            (playerName == null || playerName.isBlank())? "Player": playerName.trim(),
+            (difficulty == null || difficulty.isBlank())? "Normal": difficulty.trim()
         );
     }
 

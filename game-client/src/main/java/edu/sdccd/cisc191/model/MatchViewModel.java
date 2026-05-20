@@ -69,8 +69,8 @@ public class MatchViewModel {
         return String.format(
             "Match %s: %s vs %s (%s, %s)",
             matchId,
-            player.getName(), opponent.getName(),
-            (difficulty == null || difficulty.isBlank())? "Normal" : difficulty,
+            player.getName().trim(), opponent.getName().trim(),
+            (difficulty == null || difficulty.isBlank())? "Normal" : difficulty.trim(),
             ranked ? "ranked" : "casual"
         );
     }

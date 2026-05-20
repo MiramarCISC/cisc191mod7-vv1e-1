@@ -72,9 +72,9 @@ public class GameServiceImpl extends GameServiceGrpc.GameServiceImplBase {
         return String.format(
             "Match %s: %s vs %s (%s, %s)",
             matchId,
-            (playerName == null || playerName.isBlank()) ? "Player" : playerName,
-            (opponentName == null || opponentName.isBlank()) ? "Bot" : opponentName,
-            (difficulty == null || difficulty.isBlank())? "Normal" : difficulty,
+            (playerName == null || playerName.isBlank()) ? "Player" : playerName.trim(),
+            (opponentName == null || opponentName.isBlank()) ? "Bot" : opponentName.trim(),
+            (difficulty == null || difficulty.isBlank())? "Normal" : difficulty.trim(),
             ranked ? "ranked" : "casual"
         );
     }
