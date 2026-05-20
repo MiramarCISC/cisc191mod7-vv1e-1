@@ -64,9 +64,7 @@ public class GameController {
         boolean ranked = rankedMatchCheckBox.isSelected();
 
         statusLabel.setText("Status: Joining match...");
-        matchLog.appendText("Joining " + (ranked ? "ranked" : "casual")
-                + " match as " + playerName
-                + " on " + difficulty + " difficulty...\n");
+        matchLog.appendText(buildJoinLogMessage(playerName, difficulty, ranked));
 
         Task<JoinMatchResponse> task = grpcClient.joinMatchTask(
                 playerName,
@@ -196,35 +194,22 @@ public class GameController {
         });
     }
 
-    /**
-     * TODO 3: Complete this controller helper.
-     *
-     * Return exactly:
-     * Joining ranked match as Ada on Hard difficulty...
-     * or:
-     * Joining casual match as Ada on Normal difficulty...
-     *
-     * Requirements:
-     * - Use "Player" when playerName is null or blank.
-     * - Use "Normal" when difficulty is null or blank.
-     * - Trim playerName and difficulty.
-     */
     public static String buildJoinLogMessage(String playerName, String difficulty, boolean ranked) {
-        return "TODO: build join log message";
+        return String.format(
+            "Joining %s match as %s on %s difficulty...",
+            ranked? "ranked": "casual",
+            (playerName == null || playerName.isBlank())? "Player": playerName.trim(),
+            (difficulty == null || difficulty.isBlank())? "Normal": difficulty.trim()
+        );
     }
 
-    /**
-     * TODO 8: Complete this helper so UI updates are safe from any thread.
-     *
-     * JavaFX controls must be changed on the JavaFX Application Thread.
-     * Requirements:
-     * - If action is null, do nothing.
-     * - If already on the JavaFX Application Thread, run action immediately.
-     * - Otherwise, schedule it with Platform.runLater(action).
-     */
     public static void runOnFxThread(Runnable action) {
         if (action != null) {
-            action.run();
+            if (Platform.isFxApplicationThread()) {
+                action.run();
+            } else {
+                Platform.runLater(action);
+            }
         }
     }
 
